@@ -36,7 +36,6 @@ app.get("/repositories", (request, response) => {
 app.post("/repositories", (request, response) => {
   let { title, url, techs}  = request.body;
   const likes = 0;
-  techs = techs.split(',');
 
   const project = {
     title,
@@ -47,8 +46,6 @@ app.post("/repositories", (request, response) => {
   }
 
   repositories.push(project)
-
-  response.body = project
   return response.status(200).json(project)
 });
 
@@ -56,8 +53,6 @@ app.put("/repositories/:id", findProject,  (request, response) => {
   const { id } = request.params
   let { title, url, techs } = request.body
   const { likes } = repositories[request.projectIndex]
-
-  techs = techs.split(',')
 
   const project = {
     title,
@@ -97,11 +92,7 @@ app.post("/repositories/:id/like", findProject,  (request, response) => {
 
   repositories[request.projectIndex] = project
 
-  return response.json(likes)
+  return response.json(project)
 });
-
-app.listen(3334, () => {
-  console.log(' 👀 Watching your code! 👀')
-})
 
 module.exports = app;
